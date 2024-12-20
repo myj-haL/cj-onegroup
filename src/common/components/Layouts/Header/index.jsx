@@ -7,18 +7,19 @@ import { useEffect, useRef, useState } from "react";
 function Header () {
   const innerWidth = useResponsive();
   const [isLnbOpen, setIsLnbOpen] = useState(false);
-  const lnbRef = useRef(false);
+  
+  const lnbRef = useRef(null);
   const handleLnbOpen = () => {
-    setIsLnbOpen(!isLnbOpen)
+    setIsLnbOpen((prev) => !prev)
   }
 
-  const handleLnbMouseEnter = () => {
+  const handleLnbMouseEnter =() => {
     setIsLnbOpen(true)
-  }
+  };
 
   const handleLnbMouseLeave = () => {
     setIsLnbOpen(false)
-  }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,11 +28,11 @@ function Header () {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mouseover", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside); // 모바일 환경 대응
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mouseover", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside); // 정리
     };
   }, [])

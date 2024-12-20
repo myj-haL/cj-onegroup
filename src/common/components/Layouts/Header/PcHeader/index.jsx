@@ -109,71 +109,72 @@ function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef, handleLnbMouseLeave, handl
     <div className={style.container}>
       <div className={style.inner}>
         {location.pathname === '/about' || location.pathname === '/people' ? 
-        <Link to={'/'} className={style.logo}>
+        <Link to="/" className={style.logo}>
           <img alt="logo" src={logoFill} />
         </Link>
         : 
-        <Link to={'/'} className={style.logo}>
+        <a href="/" className={style.logo}>
           <img alt="logo" src={logo} />
-        </Link>
+        </a>
         }
         
 
-        <ul className={style.menu_list} onMouseEnter={handleLnbMouseEnter}>
+        <ul className={style.menu_list} onMouseMove={handleLnbMouseEnter}>
           {menuList.map((item) => (
             <li key={item.id} >
               <Link to={item.location} className={`${location.pathname === item.location && style.border} ${location.pathname === '/about' || location.pathname === '/people' ? style.changeColor : ''}`}>{item.name}</Link>
             </li>
           ))}
         </ul>
-      </div>
+        
+        <div className={`${style.lnb} ${isLnbOpen === true ? style.show : ''}`} ref={lnbRef}  onMouseLeave={handleLnbMouseLeave}>
+          <div className={style.lnb_inner} onClick={handleLnbOpen}>
+            <Link to="/" className={style.logo}>
+              <img alt="logo" src={logoFill} />
+            </Link>
 
-      <div className={`${style.lnb} ${isLnbOpen === true ? style.show : ''}`} ref={lnbRef}  onMouseLeave={handleLnbMouseLeave}>
-        <div className={style.lnb_inner} onClick={handleLnbOpen}>
-          <Link to={'/'} className={style.logo}>
-            <img alt="logo" src={logoFill} />
-          </Link>
+            <div className={style.lnb_right}>
+              <img alt="shape icon" src={shapeIcon} className={style.shape_icon} />
 
-          <div className={style.lnb_right}>
-            <img alt="shape icon" src={shapeIcon} className={style.shape_icon} />
+              <div className={style.right_menu}>
+                <ul className={style.menu_list}>
+                  {menuList.map((item) => (
+                    <li key={item.id}>
+                      <Link to={item.location} className={location.pathname === item.location ? style.border : ''}>{item.name}</Link>
+                      <ul className={style.depth_menu}>
+                        {item.twoDepthMenu.map((item2) => (
+                          <li key={item2.id}>
+                            <Link to={item.location} style={{fontWeight: langActive === 0 ? '500' : '400' }}>
+                              {item2.name2}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
 
-            <div className={style.right_menu}>
-              <ul className={style.menu_list}>
-                {menuList.map((item) => (
-                  <li key={item.id}>
-                    <Link to={item.location} className={location.pathname === item.location ? style.border : ''}>{item.name}</Link>
-                    <ul className={style.depth_menu}>
-                      {item.twoDepthMenu.map((item2) => (
-                        <li key={item2.id}>
-                          <Link to={item.location} style={{fontWeight: langActive === 0 ? '500' : '400' }}>
-                            {item2.name2}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-
-              <div className={style.language}>
-                <button type="button" onClick={(e) => {
-                  e.stopPropagation();
-                  changeLanguage('ko', 0)
-                }} className={langActive === 0 ? style.active : ''}>KR</button> 
-                / 
-                <button type="button" onClick={(e) => {
-                  e.stopPropagation();
-                  changeLanguage('en', 1)
-                  }} className={langActive === 1 ? style.active : ''}>EN</button>
+                <div className={style.language}>
+                  <button type="button" onClick={(e) => {
+                    e.stopPropagation();
+                    changeLanguage('ko', 0)
+                  }} className={langActive === 0 ? style.active : ''}>KR</button> 
+                  / 
+                  <button type="button" onClick={(e) => {
+                    e.stopPropagation();
+                    changeLanguage('en', 1)
+                    }} className={langActive === 1 ? style.active : ''}>EN</button>
+                </div>
               </div>
             </div>
           </div>
+          <p className={style.lnb_foot}>
+            Stories in Every Flavor, <br />
+            Memories in Every Bite
+          </p>
         </div>
-        <p className={style.lnb_foot}>
-          Stories in Every Flavor, <br />
-          Memories in Every Bite
-        </p>
       </div>
+
     </div>
   )
 }
