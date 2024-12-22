@@ -28,7 +28,7 @@
   .menu_list {
     display: flex;
     align-items: center;
-    gap: 58px;
+    gap: 59px;
     position: relative;
     top: 5px;
 
@@ -87,12 +87,12 @@
         // width: fit-content;
         &:first-child {
           margin-right: 58px;
-          width: 110px;
+          width: 111.5px;
         }
 
         &:nth-child(2) {
           margin-right: 27px;
-          width: 110px;
+          width: 112px;
         }
       }
 
