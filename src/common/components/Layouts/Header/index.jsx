@@ -13,13 +13,13 @@ function Header () {
     setIsLnbOpen((prev) => !prev)
   }
 
-  const handleLnbMouseEnter =() => {
-    setIsLnbOpen(true)
-  };
+  // const handleLnbMouseEnter =() => {
+  //   setIsLnbOpen(true)
+  // };
 
-  const handleLnbMouseLeave = () => {
-    setIsLnbOpen(false)
-  };
+  // const handleLnbMouseLeave = () => {
+  //   setIsLnbOpen(false)
+  // };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,11 +28,11 @@ function Header () {
       }
     }
 
-    document.addEventListener("mouseover", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside); // 모바일 환경 대응
 
     return () => {
-      document.removeEventListener("mouseover", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside); // 정리
     };
   }, [])
@@ -41,9 +41,7 @@ function Header () {
     <header className={style.container}>
       {innerWidth >= 1024 ? 
       <PcHeader 
-        // handleLnbOpen={handleLnbOpen}
-        handleLnbMouseEnter={handleLnbMouseEnter}
-        handleLnbMouseLeave={handleLnbMouseLeave}
+        handleLnbOpen={handleLnbOpen}
         isLnbOpen={isLnbOpen}
         lnbRef={lnbRef}
       /> 

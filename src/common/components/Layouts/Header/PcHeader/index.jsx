@@ -3,17 +3,11 @@ import style from "./index.module.scss";
 import logo from "../../../../../assets/images/logo.svg";
 import shapeIcon from "../../../../../assets/images/icon-shape.svg";
 import logoFill from "../../../../../assets/images/logo-fill.svg";
-import { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
+import LanguageBtn from "../../../LanguageBtn";
 
-function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef, handleLnbMouseLeave, handleLnbMouseEnter}) { 
+function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef}) { 
   const { t, i18n } = useTranslation();
-
-  const [langActive, setLangActive] = useState(1);
-  const changeLanguage = (lng, index) => {
-    i18n.changeLanguage(lng); // 언어 변경
-    setLangActive(index);
-  };
 
   const menuList = [
     {
@@ -97,29 +91,25 @@ function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef, handleLnbMouseLeave, handl
 
   const location = useLocation();
 
-  useEffect(() => {
-    if (i18n.language === 'ko' && langActive !== 0) {
-      setLangActive(0);
-    } else if (i18n.language === 'en' && langActive !== 1) {
-      setLangActive(1);
-    }
-  }, [i18n.language, langActive]);
-
   return (
     <div className={style.container}>
       <div className={style.inner}>
-        {location.pathname === '/about' || location.pathname === '/people' ? 
-        <Link to="/" className={style.logo}>
-          <img alt="logo" src={logoFill} />
-        </Link>
-        : 
-        <a href="/" className={style.logo}>
-          <img alt="logo" src={logo} />
-        </a>
-        }
+        <div className={style.left}>
+          {location.pathname === '/about' || location.pathname === '/people' ? 
+          <Link to="/" className={style.logo}>
+            <img alt="logo" src={logoFill} />
+          </Link>
+          : 
+          <a href="/" className={style.logo}>
+            <img alt="logo" src={logo} />
+          </a>
+          }
+
+          <LanguageBtn />
+        </div>
         
 
-        <ul className={style.menu_list} onMouseMove={handleLnbMouseEnter}>
+        <ul className={style.menu_list} onClick={handleLnbOpen}>
           {menuList.map((item) => (
             <li key={item.id} >
               <Link to={item.location} className={`${location.pathname === item.location && style.border} ${location.pathname === '/about' || location.pathname === '/people' ? style.changeColor : ''}`}>{item.name}</Link>
@@ -127,11 +117,15 @@ function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef, handleLnbMouseLeave, handl
           ))}
         </ul>
         
-        <div className={`${style.lnb} ${isLnbOpen === true ? style.show : ''}`} ref={lnbRef}  onMouseLeave={handleLnbMouseLeave}>
+        <div className={`${style.lnb} ${isLnbOpen === true ? style.show : ''}`} ref={lnbRef}>
           <div className={style.lnb_inner} onClick={handleLnbOpen}>
-            <Link to="/" className={style.logo}>
-              <img alt="logo" src={logoFill} />
-            </Link>
+            <div className={style.left}>
+              <Link to="/" className={style.logo}>
+                <img alt="logo" src={logoFill} />
+              </Link>
+
+              <LanguageBtn addClass={'lnb'} />
+            </div>
 
             <div className={style.lnb_right}>
               <img alt="shape icon" src={shapeIcon} className={style.shape_icon} />
@@ -144,7 +138,7 @@ function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef, handleLnbMouseLeave, handl
                       <ul className={style.depth_menu}>
                         {item.twoDepthMenu.map((item2) => (
                           <li key={item2.id}>
-                            <Link to={item.location} style={{fontWeight: langActive === 0 ? '500' : '400' }}>
+                            <Link to={item.location} style={{fontWeight: i18n.language === 'ko' ? '500' : '400' }}>
                               {item2.name2}
                             </Link>
                           </li>
@@ -154,17 +148,7 @@ function PcHeader ({handleLnbOpen, isLnbOpen, lnbRef, handleLnbMouseLeave, handl
                   ))}
                 </ul>
 
-                <div className={style.language}>
-                  <button type="button" onClick={(e) => {
-                    e.stopPropagation();
-                    changeLanguage('ko', 0)
-                  }} className={langActive === 0 ? style.active : ''}>KR</button> 
-                  / 
-                  <button type="button" onClick={(e) => {
-                    e.stopPropagation();
-                    changeLanguage('en', 1)
-                    }} className={langActive === 1 ? style.active : ''}>EN</button>
-                </div>
+                
               </div>
             </div>
           </div>

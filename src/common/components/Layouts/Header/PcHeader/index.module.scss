@@ -61,7 +61,12 @@
         }
       }
     }
+  }
 
+  .left {
+    display: flex;
+    align-items: flex-start;
+    gap: 49px;
   }
 
   .lnb {
@@ -174,30 +179,6 @@
     ul {
       position: relative;
       height: 100%;
-    }
-  }
-
-  .language {
-    margin-top: 78px;
-    font-size: 22px;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: 0.44px;
-    display: flex;
-    gap: 7px;
-    height: fit-content;
-
-    button {
-      color: #A8A8A8;
-      font-size: 22px;
-      font-weight: 500;
-      line-height: normal;
-      letter-spacing: 0.44px;
-
-      &.active {
-        color: #063D2F;
-        border-bottom: 1px solid #063D2F;
-      }
     }
   }
 }
